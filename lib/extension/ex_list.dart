@@ -2,7 +2,7 @@ import 'package:flutter_base_core/util/util.dart';
 
 extension DExList<E> on List<E> {
   /// 安全的获取首个元素
-  E? get dFirst {
+  E? get dSafeFirst {
     if (isEmpty) return null;
     return first;
   }
