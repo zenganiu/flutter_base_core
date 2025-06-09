@@ -60,7 +60,7 @@ void main() {
     test('ExList', () {
       expect([].dSafeLast, null);
       expect([].dSafeLast, null);
-      expect([1, 3, 3].dSafeLast, 1);
+      expect([1, 3, 3].dSafeFirst, 1);
       expect([1, 2].dSafeLast, 2);
       expect([1, 2].dSafeFirstWhere((e) => e == 2), 2);
       expect([1, 2].dSafeFirstWhere((e) => e == 21), null);
