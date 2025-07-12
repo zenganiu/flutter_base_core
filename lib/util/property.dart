@@ -31,11 +31,17 @@ mixin DProperty {
   /// 是否移动端 iOS/Android
   bool get isMobile => isAndroid || isIOS;
 
+  /// PlatformDispatcher
+  PlatformDispatcher get dispatcher => PlatformDispatcher.instance;
+
+  /// FlutterView,未来可能会支持多个窗口。但现在默认只有一个窗口
+  ui.FlutterView get view => dispatcher.views.first;
+
   /// 像素密度
-  double get pixelRatio => ui.window.devicePixelRatio;
+  double get pixelRatio => view.devicePixelRatio;
 
   /// 屏幕大小
-  ui.Size get size => ui.window.physicalSize / pixelRatio;
+  ui.Size get size => view.physicalSize / pixelRatio;
 
   /// 屏幕宽度
   double get width => size.width;
@@ -44,12 +50,11 @@ mixin DProperty {
   double get height => size.height;
 
   /// 顶部状态栏高度
-  double get statusBarHeight => ui.window.padding.top / pixelRatio;
+  double get statusBarHeight => view.padding.top / pixelRatio;
 
   /// 底部安全区域高度
-  double get bottomBarHeight => ui.window.padding.bottom / pixelRatio;
+  double get bottomBarHeight => view.padding.bottom / pixelRatio;
 
   /// 是否暗黑模式
-  bool get isPlatformDarkMode =>
-      (ui.window.platformBrightness == ui.Brightness.dark);
+  bool get isPlatformDarkMode => (dispatcher.platformBrightness == ui.Brightness.dark);
 }
