@@ -32,19 +32,6 @@ mixin DMethod {
     }
   }
 
-  /// 获取剪切板内容
-  Future<String> getClipboardText() async {
-    try {
-      final clipboardData = await Clipboard.getData('text/plain');
-      if (clipboardData != null) {
-        return clipboardData.text ?? '';
-      }
-      return '';
-    } catch (e) {
-      return '';
-    }
-  }
-
   /// hex颜色
   Color fromHex(String hex, {Color defaultColor = Colors.black}) {
     return hex.dToColor(defaultColor: defaultColor);
@@ -84,7 +71,7 @@ mixin DMethod {
     return '${randomInRange(min, max)}';
   }
 
-  /// 获取url中query参数
+  /// 获取url中query参数,不存在返回空串
   static String getQueryValueByUrl({required String url, required String key}) {
     final uri = Uri.tryParse(url);
     if (uri == null) return '';
