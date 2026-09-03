@@ -126,4 +126,31 @@ extension DExString on String {
 
   /// 转化成DateTime
   DateTime? get dToDateTime => DateTime.tryParse(this);
+
+  /// 从链接字符串获取query参数
+  /// key: 参数名
+  /// 返回：参数值，解析失败/不存在返回空字符串
+  String dGetQueryValue({required String key}) {
+    // 安全解析url，格式错误返回null，不抛异常
+    final uri = Uri.tryParse(this);
+    if (uri == null) return '';
+    // queryParameters 自动url decode解码
+    return uri.queryParameters[key] ?? '';
+  }
+
+  /// 给当前url字符串追加/覆盖query查询参数
+  /// [params] 需要新增或者覆盖的查询参数Map
+  /// - 如果key已存在：会覆盖旧值
+  /// - 如果key不存在：新增该query参数
+  /// 返回拼接完成后的完整url字符串
+  /// 解析url发生异常时，原样返回原url(this)
+  String dAddQuery(Map<String, String> params) {
+    try {
+      final uri = Uri.parse(this);
+      final newParams = Map<String, String>.from(uri.queryParameters)..addAll(params);
+      return uri.replace(queryParameters: newParams).toString();
+    } catch (e) {
+      return this;
+    }
+  }
 }
