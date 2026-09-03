@@ -1,8 +1,8 @@
 import 'dart:convert' as convert;
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_base_core/extension/ex_date.dart';
 import 'package:flutter_base_core/extension/ex_string.dart';
 import 'package:intl/intl.dart';
@@ -31,19 +31,6 @@ mixin DMethod {
     }
   }
 
-  /// 获取剪切板内容
-  Future<String> getClipboardText() async {
-    try {
-      final clipboardData = await Clipboard.getData('text/plain');
-      if (clipboardData != null) {
-        return clipboardData.text ?? '';
-      }
-      return '';
-    } catch (e) {
-      return '';
-    }
-  }
-
   /// hex颜色
   Color fromHex(String hex, {Color defaultColor = Colors.black}) {
     return hex.dToColor(defaultColor: defaultColor);
@@ -56,8 +43,7 @@ mixin DMethod {
   }
 
   /// 格式化时间,不符合将返回原值
-  String dateFormat(dynamic dateTime,
-      {String pattern = 'yyyy-MM-dd HH:mm:ss'}) {
+  String dateFormat(dynamic dateTime, {String pattern = 'yyyy-MM-dd HH:mm:ss'}) {
     var fm = dateTime.toString();
     if (dateTime is String) {
       final date = DateTime.tryParse(dateTime);
@@ -71,5 +57,21 @@ mixin DMethod {
       return date.dFormat(pattern: pattern);
     }
     return fm;
+  }
+
+  /// 指定范围的随机数
+  static int randomInRange(int min, int max) {
+    final random = Random();
+    return min + random.nextInt(max - min + 1);
+  }
+
+  /// 指定范围的随机数字符串
+  static String randomInRangeToStr(int min, int max) {
+    return '${randomInRange(min, max)}';
+  }
+
+  /// 获取url中query参数,不存在返回空串
+  static String getQueryValueByUrl({required String url, required String key}) {
+    return url.dGetQueryValue(key: key);
   }
 }

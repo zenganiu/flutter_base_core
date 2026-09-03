@@ -1,4 +1,4 @@
-library flutter_base_core;
+library;
 
 export 'base/timer_countdown.dart';
 export 'base/timer_counter.dart';
