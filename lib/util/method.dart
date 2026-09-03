@@ -72,8 +72,6 @@ mixin DMethod {
 
   /// 获取url中query参数,不存在返回空串
   static String getQueryValueByUrl({required String url, required String key}) {
-    final uri = Uri.tryParse(url);
-    if (uri == null) return '';
-    return uri.queryParameters[key] ?? '';
+    return url.dGetQueryValue(key: key);
   }
 }
