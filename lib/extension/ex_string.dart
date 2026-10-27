@@ -1,7 +1,5 @@
-import 'dart:convert' as convert;
-
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_base_core/util/md5_util.dart';
 import 'package:flutter_base_core/util/util.dart';
 
 extension DExString on String {
@@ -25,9 +23,7 @@ extension DExString on String {
 
   /// md5加密
   String get dToMD5 {
-    var content = const convert.Utf8Encoder().convert(this);
-    var digest = md5.convert(content);
-    return digest.toString();
+    return MD5Util.hash(this);
   }
 
   /// 转为int
